@@ -1,5 +1,7 @@
 package com.springApp.Jpa.service;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.springApp.Jpa.dto.UserDto;
 import com.springApp.Jpa.entity.User;
 import com.springApp.Jpa.repository.UserJpaRepository;
 import com.springApp.Jpa.repository.UserRepository;
@@ -13,11 +15,13 @@ import java.util.Optional;
 public class UserService {
     private final UserRepository repository;
     private final UserJpaRepository jpaRepository;
+    private final ObjectMapper mapper;
 
     @Autowired
-    public UserService(UserRepository repository, UserJpaRepository jpaRepository) {
+    public UserService(UserRepository repository, UserJpaRepository jpaRepository, ObjectMapper mapper) {
         this.repository = repository;
         this.jpaRepository = jpaRepository;
+        this.mapper = mapper;
     }
 
     public Iterable<User> saveAll(List<User> users){
@@ -37,6 +41,11 @@ public class UserService {
     }
 
     public User addUser(User user){
+        return jpaRepository.save(user);
+    }
+
+    public User createUserFromDto(UserDto userDto) {
+        User user = mapper.convertValue(userDto, User.class);
         return jpaRepository.save(user);
     }
 }

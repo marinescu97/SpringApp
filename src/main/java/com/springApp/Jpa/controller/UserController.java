@@ -1,5 +1,6 @@
 package com.springApp.Jpa.controller;
 
+import com.springApp.Jpa.dto.UserDto;
 import com.springApp.Jpa.entity.Address;
 import com.springApp.Jpa.entity.User;
 import com.springApp.Jpa.service.UserService;
@@ -55,5 +56,11 @@ public class UserController {
     public ResponseEntity<User> addUser(@RequestBody User user){
         User saveUser = service.addUser(user);
         return ResponseEntity.ok(saveUser);
+    }
+
+    @PostMapping("/userDto")
+    public ResponseEntity<User> createUserFromDto(@RequestBody UserDto userDto){
+        User user = service.createUserFromDto(userDto);
+        return ResponseEntity.ok(user);
     }
 }
