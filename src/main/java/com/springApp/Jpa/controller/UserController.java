@@ -1,5 +1,6 @@
 package com.springApp.Jpa.controller;
 
+import com.springApp.Jpa.entity.Address;
 import com.springApp.Jpa.entity.User;
 import com.springApp.Jpa.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/users")
@@ -36,5 +38,22 @@ public class UserController {
     public ResponseEntity<Void> deleteUser(@PathVariable Long id){
         service.deleteUser(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/{username}")
+    public ResponseEntity<User> findByUsername(@PathVariable String username){
+        Optional<User> user = service.findByUsername(username);
+
+        if (user.isPresent()){
+            return ResponseEntity.ok(user.get());
+        }
+
+        return ResponseEntity.notFound().build();
+    }
+
+    @PostMapping
+    public ResponseEntity<User> addUser(@RequestBody User user){
+        User saveUser = service.addUser(user);
+        return ResponseEntity.ok(saveUser);
     }
 }
