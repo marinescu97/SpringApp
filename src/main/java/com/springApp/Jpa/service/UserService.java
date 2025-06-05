@@ -29,15 +29,15 @@ public class UserService {
     }
 
     public Iterable<User> saveAll(List<User> users){
-        return repository.saveAll(users);
+        return jpaRepository.saveAll(users);
     }
 
     public Iterable<User> findAllUsers(){
-        return repository.findAll();
+        return jpaRepository.findAll();
     }
 
     public void deleteUser(Long id){
-        repository.deleteById(id);
+        jpaRepository.deleteById(id);
     }
 
     public Optional<User> findByUsername(String username){
