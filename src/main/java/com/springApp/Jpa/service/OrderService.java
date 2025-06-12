@@ -33,6 +33,7 @@ public class OrderService {
             order = new Order(product, price, LocalDate.now(), user);
         } else {
             System.out.println("User not found for id " + userId);
+            return null;
         }
 
         return repository.save(order);
